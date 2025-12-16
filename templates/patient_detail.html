@@ -1,0 +1,94 @@
+{% extends "doctor_base.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+    <div class="no-print" style="margin-bottom: 20px;">
+        <a href="{% url 'pulsehospital:dashboard' %}" class="action-link" style="margin-bottom: 20px; display: inline-block;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <form method="post" id="prescriptionForm" style="margin-bottom: 40px;">
+        {% csrf_token %}
+        <div class="prescription-container" style="background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+            
+            <h2 class="section-title no-print" style="text-align: left; margin-bottom: 20px;">Patient Record & Prescription</h2>
+
+            <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 25px; background: #f9f9f9; border-radius: 5px;">
+                <p><strong>Patient Name:</strong> {{ appointment.patient_name }}</p>
+                <p><strong>Date of Visit:</strong> {{ appointment.appointment_date|date:"d M, Y" }} | <strong>Time:</strong> {{ appointment.appointment_time|time:"g:i A" }}</p>
+                <p><strong>Contact:</strong> <a href="tel:{{ appointment.phone }}">{{ appointment.phone }}</a></p>
+            </div>
+            
+            <h4 style="color: var(--accent-color); margin-bottom: 15px;">Chief Complaint / Diagnosis:</h4>
+            <textarea name="diagnosis" rows="2" class="form-control" style="width: 100%; padding: 10px; margin-bottom: 20px;" 
+                      placeholder="Enter Diagnosis (e.g., Viral Fever, Hypertension)"
+                      >{{ appointment.diagnosis|default:"" }}</textarea>
+
+            <h4 style="color: var(--accent-color); margin-bottom: 15px;">Rx (Medication & Instructions):</h4>
+            <textarea name="medication" rows="10" class="form-control" style="width: 100%; padding: 10px; margin-bottom: 30px;" 
+                      placeholder="Write medications, dosage, and instructions here..."
+                      >{{ appointment.medication|default:"" }}</textarea>
+            
+
+            <div class="no-print" style="margin-top: 30px; text-align: center;">
+                <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">
+                    💾 Save & Confirm Appointment
+                </button>
+                <button type="button" onclick="window.print()" class="btn btn-secondary" style="padding: 10px 20px; margin-left: 10px;">
+                    🖨️ Print Prescription
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="print-only" style="padding: 20px; border: 1px solid #ccc;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 5px; margin-bottom: 15px;">
+            <div style="flex-basis: 70%;">
+                <h1 style="font-size: 1.5em; color: var(--primary-color); margin: 0;">PULSE MULTISPECIALITY HOSPITAL</h1>
+                <p style="font-size: 0.9em; color: var(--accent-color); margin: 0;">Bhiwgade Critical Care And Maternity Home</p>
+            </div>
+            <div style="flex-basis: 30%; text-align: right; font-size: 0.9em;">
+                <h3 style="color: #e74c3c; border: 1px solid #e74c3c; display: inline-block; padding: 2px 5px; margin: 0;">24 HOURS SERVICE</h3>
+                <p style="margin: 3px 0 0;">OPD Time: 10.00 am to 4.00 pm</p>
+                <p>6.00 pm to 10.00 pm</p>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9em;">
+            <div style="flex-basis: 45%;">
+                <p style="font-weight: 600;">Dr. {{ doctor.name }}</p>
+                <p>MBBS (GMC Nagpur)</p>
+                <p>{{ doctor.specialty }}</p>
+                <p>Reg No: [Need Reg No Field]</p>
+            </div>
+            <div style="flex-basis: 50%; text-align: right;">
+                <p>तकिया वार्ड, मेन रोड, भंडारा 441904</p>
+                <p>Mo.No. 9156361798 | email: pulsemh21@gmail.com</p>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 30px; font-size: 0.9em; display: flex; justify-content: space-between;">
+            <span>Patient Name: <strong>{{ appointment.patient_name }}</strong></span>
+            <span>Age: [Need Age Field]</span>
+            <span>Gender: [Need Gender Field]</span>
+            <span>Reg No: [Need Reg No Field]</span>
+            <span>Date: {{ appointment.appointment_date|date:"d/m/Y" }}</span>
+        </div>
+
+        <div style="margin-bottom: 100px;">
+            <h4 style="font-size: 1.8em; margin-bottom: 10px;">Rx,</h4>
+            <div style="padding-left: 10px;">
+                <p><strong>Diagnosis:</strong> {{ appointment.diagnosis|default:"---" }}</p>
+                <pre style="white-space: pre-wrap; font-family: inherit; font-size: 1em; line-height: 1.5;">{{ appointment.medication|default:"(No medication details recorded)" }}</pre>
+            </div>
+        </div>
+        
+        <div style="border-top: 1px solid #ccc; padding-top: 10px; text-align: right;">
+             <p style="font-size: 0.9em; font-weight: 600;">Doctor's Signature: __________________</p>
+        </div>
+        <p style="text-align: center; margin-top: 20px; font-size: 0.8em; color: #555;">Note: Please bring this Prescription on your next visit.</p>
+    </div>
+
+{% endblock dashboard_content %}

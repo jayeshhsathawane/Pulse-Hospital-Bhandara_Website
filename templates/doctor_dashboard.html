@@ -1,0 +1,61 @@
+{% extends "doctor_base.html" %}
+
+{% block dashboard_content %}
+    <h2 class="section-title" style="text-align: left;">
+        {% if request.path == '/dashboard/today/' %}
+            Today's Scheduled Appointments
+        {% else %}
+            All Upcoming Appointments
+        {% endif %}
+    </h2>
+    
+    <div style="background: var(--white); padding: 20px; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 30px; display: inline-block; min-width: 200px;">
+        <h4 style="color: var(--dark-green);">Monthly Patients ({{ current_month_name|default:"This Month" }})</h4>
+        <p style="font-size: 2.5em; font-weight: 700; color: var(--accent-color);">
+            {{ monthly_patient_count|default:"0" }}
+        </p>
+        <p>Confirmed appointments this month.</p>
+    </div>
+    
+    {% if appointments %}
+        <table class="appointment-table">
+            <thead style="background: var(--accent-color); color: white;">
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Patient Name</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th class="no-print">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.appointment_date|date:"M d, Y" }} at {{ appt.appointment_time|time:"g:i A" }}</td>
+                    <td style="font-weight: 600;">{{ appt.patient_name }}</td>
+                    <td>{{ appt.department|capfirst }}</td>
+                    <td>
+                        <span style="background: {% if appt.status == 'Pending' %}#f1c40f{% elif appt.status == 'Confirmed' %}#2ecc71{% else %}#e74c3c{% endif %}; color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.9em;">
+                            {{ appt.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'pulsehospital:patient_detail' pk=appt.pk %}" class="action-link">
+                            View & Prescribe
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="margin-top: 20px; padding: 20px; background: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 5px;">
+            {% if request.path == '/dashboard/today/' %}
+                No patients scheduled for today.
+            {% else %}
+                🎉 You have no upcoming appointments scheduled yet.
+            {% endif %}
+        </p>
+    {% endif %}
+
+{% endblock dashboard_content %}

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - Pulse Multispeciality Hospital Bhandara{% endblock %}
+
+{% block content %}
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Your Health, Our Priority</h1>
+            <p class="hero-subtitle">Comprehensive Healthcare Services in Bhandara</p>
+            <p class="hero-description">Expert Medical Care with Advanced Facilities</p>
+            <div class="hero-buttons">
+                <a href="{% url 'pulsehospital:contact' %}#appointment" class="btn btn-primary">Book Appointment</a>
+                <a href="tel:9765211026" class="btn btn-secondary">Emergency: 9765211026</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="contact-grid" style="align-items: center;">
+                <div class="about-image-container" style="position: relative;">
+                    <div style="
+                        border-radius: 20px; 
+                        overflow: hidden; 
+                        box-shadow: var(--shadow-hover); 
+                        border: 5px solid var(--white);
+                        position: relative;
+                        z-index: 2;">
+                        <img src="{% static 'public/gallery/img1.jpg' %}" alt="About Pulse Hospital" style="width: 100%; height: 100%; display: block;">
+                    </div>
+                    <div style="
+                        position: absolute; 
+                        top: 20px; 
+                        left: -20px; 
+                        width: 100%; 
+                        height: 100%; 
+                        background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+                        border-radius: 20px; 
+                        z-index: 1;
+                        opacity: 0.3;">
+                    </div>
+                </div>
+
+                <div class="about-content">
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">About Pulse Hospital</h2>
+                    <h4 style="color: var(--accent-color); margin-bottom: 15px; font-size: 1.2rem;">Dedicated to Healing, Committed to Care</h4>
+                    
+                    <p style="color: var(--text-dark); margin-bottom: 15px; line-height: 1.8; text-align: justify;">
+                        Welcome to <strong>Pulse Multispeciality Hospital (Bhiwgade Critical Care & Maternity Home)</strong>. Located in the heart of Bhandara, we are a premier healthcare facility dedicated to providing comprehensive medical care with a human touch.
+                    </p>
+
+                    <p style="color: var(--text-light); margin-bottom: 25px; text-align: justify;">
+                        Founded with a vision to make advanced healthcare accessible, we combine state-of-the-art technology with experienced medical professionals. Whether it's critical care, maternity services, or general medicine, your health is our utmost priority.
+                    </p>
+
+                    <ul class="services-list" style="margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <li>24/7 Emergency Services</li>
+                        <li>Expert Medical Team</li>
+                        <li>In-House Pathalogy</li>
+                        <li>In-House Pharmacy</li>
+                        <li>Hygienic Environment</li>
+                    </ul>
+
+                    <div class="hero-buttons" style="justify-content: flex-start;">
+                        <a href="{% url 'pulsehospital:doctors' %}" class="btn btn-primary">Meet Our Doctors</a>
+                        <a href="{% url 'pulsehospital:contact' %}" class="btn btn-secondary" style="color: var(--primary-color); border-color: var(--primary-color);">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="facility-highlight" style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: var(--white); border-top: 4px solid var(--primary-color); color: var(--text-dark);">
+                <div>
+                    <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">5+</h3>
+                    <p>Years of Experience</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">100+</h3>
+                    <p>Happy Patients</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">24/7</h3>
+                    <p>Emergency Support</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">5+</h3>
+                    <p>Medical Experts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Patient Testimonials</h2>
+            <p class="section-subtitle">What our patients say about us</p>
+            <div class="testimonials-carousel">
+                <button class="carousel-btn prev" aria-label="Previous testimonial">‹</button>
+                <div class="testimonial-track">
+                    <div class="testimonial-card active">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Excellent medical care and very professional staff. Dr. Rahul Bhiwgade provided exceptional treatment for my diabetes. Highly recommended!"</p>
+                        <p class="testimonial-author">- Rajesh Sharma</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Dr. Anagha Kharwade is an amazing gynecologist. She took great care during my pregnancy and delivery. Thank you Pulse Hospital!"</p>
+                        <p class="testimonial-author">- Priya Deshmukh</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Very clean hospital with modern facilities. The doctors are very caring and explain everything clearly. Great experience!"</p>
+                        <p class="testimonial-author">- Amit Patel</p>
+                    </div>
+                </div>
+                <button class="carousel-btn next" aria-label="Next testimonial">›</button>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

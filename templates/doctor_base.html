@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. {{ doctor.name }} | Dashboard</title>
+    <link rel="icon" href="{% static 'public/logo.jpg' %}" type="image/jpeg">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <style>
+        /* Dashboard Specific Styles */
+        :root {
+            --sidebar-width: 250px;
+            --dashboard-bg: #f4f6f9;
+        }
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--dark-green);
+            color: var(--white);
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100%;
+            z-index: 50; /* Ensure sidebar is above main content on desktop */
+        }
+        .sidebar-header {
+            text-align: center;
+            padding: 10px 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--light-green);
+        }
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+        .sidebar-nav li a {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--white);
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        .sidebar-nav li a:hover,
+        .sidebar-nav li.active a {
+            background: var(--secondary-color);
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 30px;
+            background: var(--dashboard-bg);
+        }
+        /* Table Styling for Dashboard */
+        .appointment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .appointment-table th, .appointment-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        .appointment-table thead {
+            background: var(--accent-color);
+            color: white;
+        }
+        .action-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        /* Prescription/Print Styles */
+        .print-only { display: none; }
+        @media print {
+            .no-print { display: none; }
+            .print-only { display: block; }
+            .main-content { margin-left: 0; padding: 0; background: white; }
+            body { font-size: 10pt; }
+        }
+        
+        /* --- MOBILE RESPONSIVE FIXES (Max 768px) --- */
+        @media (max-width: 768px) {
+            
+            /* 1. Dashboard Container Adjustment (Stacking) */
+            .dashboard-container {
+                flex-direction: column; 
+            }
+            
+            /* 2. Sidebar Behavior */
+            .sidebar {
+                width: 100%; /* Full width */
+                height: auto;
+                position: relative; /* Removes fixed position */
+                box-shadow: none;
+            }
+            .sidebar-nav {
+                display: flex;
+                flex-wrap: wrap; 
+                justify-content: space-around;
+                padding: 10px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .sidebar-nav li {
+                flex-basis: 45%; /* Two items per row */
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            .sidebar-nav li a, .sidebar-nav li form button {
+                padding: 10px 5px; /* Compact padding */
+            }
+            
+            /* 3. Main Content Behavior */
+            .main-content {
+                margin-left: 0; /* Remove the fixed left margin */
+                padding: 15px; 
+            }
+            
+            /* 4. Table Responsiveness (Makes table stackable) */
+            .appointment-table, .appointment-table thead, .appointment-table tbody, .appointment-table th, .appointment-table td, .appointment-table tr {
+                display: block; 
+            }
+            /* Hide table headers (but keep for accessibility) */
+            .appointment-table thead tr {
+                position: absolute;
+                top: -9999px; 
+                left: -9999px;
+            }
+            .appointment-table tr {
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+                display: block;
+            }
+            .appointment-table td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%; /* Space for the generated label */
+                text-align: right;
+            }
+            /* Generate Labels for Table Cells */
+            .appointment-table td:before {
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 600;
+                color: var(--text-dark);
+            }
+            /* Mapping labels (CRUCIAL: ensure the order matches your HTML columns) */
+            .appointment-table td:nth-of-type(1):before { content: "Time:"; }
+            .appointment-table td:nth-of-type(2):before { content: "Patient:"; }
+            .appointment-table td:nth-of-type(3):before { content: "Dept.:"; }
+            .appointment-table td:nth-of-type(4):before { content: "Status:"; }
+            .appointment-table td:nth-of-type(5):before { content: "Action:"; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar no-print">
+            <div class="sidebar-header">
+                <h3>Dr. {{ doctor.name }}</h3>
+                <p style="font-size: 0.9em; margin: 0;">{{ doctor.specialty }}</p>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li class="{% if request.path == '/dashboard/' %}active{% endif %}">
+                    <a href="{% url 'pulsehospital:dashboard' %}">View All Appointments</a>
+                </li>
+                <li class="{% if request.path == '/dashboard/today/' %}active{% endif %}">
+                    <a href="{% url 'pulsehospital:dashboard_today' %}">Today's Patients</a>
+                </li>
+                <li style="margin-top: 30px;">
+                    <form method="post" action="{% url 'logout' %}" style="padding: 0 20px;">
+                        {% csrf_token %}
+                        <button type="submit" style="width: 100%; background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            {% block dashboard_content %}
+                {% endblock dashboard_content %}
+        </div>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

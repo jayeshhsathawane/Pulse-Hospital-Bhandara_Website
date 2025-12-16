@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'public/logo.jpg' %}" type="image/jpeg">
+    <title>{% block title %}Pulse Multispeciality Hospital Bhandara{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <style>
+        /* Floating Button Styles (Simplified for brevity) */
+        .floating-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; border: none; }
+        .float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+        .float-btn svg { width: 30px; height: 30px; }
+        .whatsapp-btn { background-color: #25d366; }
+        .whatsapp-btn svg { fill: white; }
+        .scroll-top-btn { background-color: var(--primary-color, #0056b3); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s; }
+        .scroll-top-btn.show { opacity: 1; visibility: visible; }
+        .scroll-top-btn svg { fill: white; }
+        
+        /* Logout Button Reset (Ensures button looks like a link) */
+        .nav-menu button { background: none; border: none; padding: 0; margin: 0; font-size: 1rem; cursor: pointer; color: var(--text-dark); font-weight: 500; transition: all 0.3s ease; text-decoration: none; }
+        .nav-menu button:hover { color: var(--primary-color); }
+        .footer-col button { background: none; border: none; padding: 0; color: #bdc3c7; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+    </style>
+    
+    {% block head_extra %}{% endblock %}
+</head>
+
+<body>
+    <div class="floating-container">
+        <button id="scrollTopBtn" class="float-btn scroll-top-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4l-8 8h6v8h4v-8h6z"/>
+            </svg>
+        </button>
+        <a href="https://wa.me/919765211026?text=Hello,%20I%20would%20like%20to%20inquire%20about%20an%20appointment." 
+            class="float-btn whatsapp-btn" 
+            target="_blank" 
+            aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .108 5.355.108 11.935c0 2.103.546 4.154 1.585 5.955L0 24l6.225-1.633c1.729.944 3.674 1.439 5.816 1.443h.004c6.58 0 11.938-5.356 11.938-11.938 0-3.19-.1.242-3.463-3.463zM12.05 21.81c-1.975 0-3.913-.53-5.608-1.536l-.402-.238-4.163 1.09 1.112-4.056-.262-.417c-1.102-1.759-1.684-3.794-1.684-5.886 0-6.115 4.975-11.09 11.095-11.09 2.963 0 5.748 1.154 7.842 3.249 2.096 2.095 3.25 4.878 3.25 7.842.005 6.117-4.966 11.092-11.087 11.092z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="emergency-banner">
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.408.593 24 1.325 24h11.455v-8.625h-2.943v-3.454h2.943V8.58c0-2.906 1.776-4.492 4.364-4.492 1.243 0 2.316.092 2.62.134v3.033h-1.808c-1.42 0-1.696.674-1.696 1.666v2.18h3.766l-.606 3.454h-3.16V24h6.088c.732 0 1.325-.592 1.325-1.325V1.325C24 .593 23.408 0 22.675 0z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C8.683 0 8.243.016 6.786.085 5.321.155 4.314.375 3.486.721 2.624 1.1 1.884 1.84 1.498 2.703.882 3.962.662 5.39.63 6.784.597 8.24.613 8.68 0 12c0 3.317.016 3.757.085 5.214.07 1.465.29 2.472.636 3.3.386.863 1.126 1.603 1.989 1.989 1.14.494 2.568.714 3.962.63 1.465-.033 1.905-.05 5.214-.05 3.317 0 3.757.016 5.214.085 1.465.07 2.472.29 3.3.636.863.386 1.603 1.126 1.989 1.989.494 1.14.714 2.568.63 3.962-.033 1.465-.05 1.905-.05 5.214 0 3.317-.016 3.757-.085 5.214-.07 1.465-.29 2.472-.636 3.3-.386.863-1.126 1.603-1.989 1.989-1.14.494-2.568.714-3.962.63-1.465-.033-1.905-.05-5.214-.05zM12 2.1c3.15 0 3.535.013 4.79.07s2.17.277 2.923.57c.72.316 1.25.753 1.787 1.29s.974 1.067 1.29 1.787c.293.753.533 1.97.57 2.923.057 1.255.07 1.64.07 4.79s-.013 3.535-.07 4.79c-.037.953-.277 2.17-.57 2.923-.316.72-.753 1.25-1.29 1.787s-1.067.974-1.787 1.29c-.753.293-1.97.533-2.923.57-1.255.057-1.64.07-4.79.07s-3.535-.013-4.79-.07c-.953-.037-2.17-.277-2.923-.57-.72-.316-1.25-.753-1.787-1.29s-.974-1.067-1.29-1.787c-.293-.753-.533-1.97-.57-2.923-.057-1.255-.07-1.64-.07-4.79s.013-3.535.07-4.79c.037-.953.277-2.17.57-2.923.316-.72.753-1.25 1.29-1.787s1.067-.974 1.787-1.29c.753-.293 1.97-.533 2.923-.57C8.465 2.113 8.85 2.1 12 2.1zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.8-9.4a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>
+                </a>
+            </div>
+            
+            <span>🚨 24/7 Emergency Services</span>
+            <a href="tel:9765211026" class="emergency-call">Call Now: 9765211026</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{% static 'public/logo.jpg' %}" alt="Pulse Hospital Logo" class="logo">
+                <div class="brand-text">
+                    <h2>Pulse Multispeciality Hospital</h2>
+                    <p>Bhiwgade Critical Care & Maternity Home</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="{% url 'pulsehospital:home' %}">Home</a></li>
+                <li><a href="{% url 'pulsehospital:services' %}">Services</a></li>
+                <li><a href="{% url 'pulsehospital:doctors' %}">Doctors</a></li>
+                <li><a href="{% url 'pulsehospital:pharmacy' %}">Pharmacy</a></li>
+                <li><a href="{% url 'pulsehospital:gallery' %}">Gallery</a></li>
+                
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'pulsehospital:dashboard' %}" style="color: var(--dark-green); font-weight: 700;">Dashboard</a></li>
+                    
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'pulsehospital:contact' %}#appointment">Appointment</a></li>
+                    <li><a href="{% url 'login' %}">Doctor Login</a></li> 
+                {% endif %}
+                
+                <li><a href="{% url 'pulsehospital:contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <img src="{% static 'public/logo.jpg' %}" alt="Pulse Hospital Logo" class="footer-logo">
+                        <h3>Pulse Multispeciality Hospital</h3>
+                    </div>
+                    <p>Providing quality healthcare services in Bhandara with experienced doctors and modern facilities.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'pulsehospital:home' %}">Home</a></li>
+                        <li><a href="{% url 'pulsehospital:services' %}">Services</a></li>
+                        <li><a href="{% url 'pulsehospital:doctors' %}">Doctors</a></li>
+                        <li><a href="{% url 'pulsehospital:pharmacy' %}">Pharmacy</a></li>
+                        <li><a href="{% url 'pulsehospital:gallery' %}">Gallery</a></li>
+                        
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'pulsehospital:dashboard' %}">Dashboard</a></li>
+                            
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: none; border: none; padding: 0; color: #bdc3c7; cursor: pointer;">Logout</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'pulsehospital:contact' %}#appointment">Appointment</a></li>
+                            <li><a href="{% url 'login' %}">Doctor Login</a></li> 
+                        {% endif %}
+                        
+                        <li><a href="{% url 'pulsehospital:contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>General Medicine</li>
+                        <li>Cardiology</li>
+                        <li>Diabetes Care</li>
+                        <li>Gynecology & Obstetrics</li>
+                        <li>Pharmacy Services</li>
+                        <li>Emergency Services</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li>📞 <a href="tel:9765211026">9765211026</a></li>
+                        <li>✉️ <a href="mailto:pulsemh21@gmail.com">pulsemh21@gmail.com</a></li>
+                        <li>📍 Takiya Ward, Bhandara</li>
+                        <li>🕐 24/7 Emergency</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Pulse Multispeciality Hospital Bhandara. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="{% static 'email-decode.min.js' %}"></script>
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        const scrollBtn = document.getElementById("scrollTopBtn");
+
+        window.addEventListener('scroll', () => {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+
+</body>
+
+</html>
