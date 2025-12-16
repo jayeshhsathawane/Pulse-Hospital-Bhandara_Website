@@ -24,4 +24,8 @@ local_settings.py
 
 # --- OS Specific ---
 .DS_Store
+<<<<<<< HEAD
 Thumbs.db
+=======
+Thumbs.db
+>>>>>>> 638ccb04c2ed0a5b25884bb169aae325d49eddf7
