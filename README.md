@@ -30,21 +30,21 @@ git clone [https://github.com/jayeshhsathawane/Pulse-Hospital-Bhandara_Website.g
 cd Pulse-Hospital-Bhandara_Website
 
 **Create and Activate Virtual Environment**
-python -m venv venv
+    python -m venv venv
 # On Windows:
-venv\Scripts\activate
+    venv\Scripts\activate
 # On Mac/Linux:
-source venv/bin/activate
+    source venv/bin/activate
 
 **Install Required Packages**
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 **Configure Environment Variables**
-*Create a file named .env in the root directory (next to manage.py) and add the following:*
+    *Create a file named .env in the root directory (next to manage.py) and add the following:*
 
-SECRET_KEY=your_secret_key_here
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,localhost
+SECRET_KEY=your_secret_key_here    
+      DEBUG=True
+            ALLOWED_HOSTS=127.0.0.1,localhost
 
 **Apply Database Migrations**
 python manage.py makemigrations
